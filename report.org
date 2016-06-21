@@ -1,0 +1,61 @@
+#+AUTHOR: RAGHAV MITTAL
+#+EMAIL: raghav.mittal@st.niituniversity.in
+#+TITLE: SSS Studio Weaver
+
+* Background
+I was working on development of AnnoletJS to demonstrate different features like
+rennaration, tagging. And my friend was working on development of 
+different tools(web services) which are demonstrated through Annolet. But this
+is not scalable and also its difficult to work independently because Annolet needed
+to be edited for accommodating each web service. So after discussion
+with Sai sir we came with idea of /Aspect Oriented Programming approach/.
+
+* Implementation
+The project is divided into three parts
+| Backend            | Middle | Frontend |
+|--------------------+--------+----------|
+| JSON Manifest file | Weaver | Annolet  |
+| CSS files          |        |          |
+| JS files           |        |          |
+| HTML files         |        |          |
+
+*** Backend
++ JSON matadata file will be provide information about web services.
++ metadata file contains information about location of webservice related files and action to
+be performed by user  
+  + name of button to be created
+  + HTML and CSS files for UI
+  + JS files for functionality
+  + function to run on click of button
+**** Webservice
++ These are the independent microservices for performing different tasks
++ Each microservice must contain an inital function named annolet_run() to start
+the service.
++ Webservice developer should provide metadata.
+
+*** Middle
+Middle depends on backend. Frontend depends on middle.
++ Weaver is an aspect weaving microservice which will weave all webservices into Annolet
+hence adding to frontend.
+*** Frontend (annolet)
++ Will load
++ Weaver will take services from backend and weave them into Annolet which is the frontend.
++ Here user can interact with these services.
+
+* Design
++ format of metadata file
+#+begin_src js
+{
+ webServiceName:'' ,
+ authorName:'' ,
+ btn-name:'' ,
+ jsFiles:['',] ,
+ htmlFiles:['',] ,
+ cssFiles:['',] ,
+}
+#+end_src
++ A function will populate Annolet menu after going through all metadata files.
+
+#+CAPTION: Design
+#+NAME: fig:design.png
+[[/home/raghav/vlead-16/weaver/design.png]]
