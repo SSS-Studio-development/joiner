@@ -58,4 +58,4 @@ hence adding to frontend.
 
 #+CAPTION: Design
 #+NAME: fig:design.png
-[[/home/raghav/vlead-16/weaver/design.png]]
+[[design.png]]
