@@ -58,4 +58,29 @@ hence adding to frontend.
 
 #+CAPTION: Design
 #+NAME: fig:design.png
-[[design.png]]
+[[/home/raghav/vlead-16/weaver/design.png]]
+
+* Code
+** mock json file
+#+NAME: mock JSON file
+#+begin_src js :tangle webservices/mock.json
+{
+ authorName: 'Raghav',
+ serviceName: 'mock',
+ buttonName: 'button',
+ cssFile: ['path.css'],
+ htmlFile: ['path.html'],
+ jsFile: ['path.js']
+}
+#+end_src
+** function fetchMetadata()
+This function reads json files and bring them to local machine for faster access.
+** function populate()
+This function should find read json metadata and populate all annolet menu according to the button names.
+#+begin_src js
+
+#+end_src
+** function getCSS(buttonName)
+Get the CSS files corresponding to button name.
+** function injectFile(buttonName, fileType)
+fetches files from other servers to inject into DOM of present URL.
