@@ -16,9 +16,9 @@ webservices through annolet
 + Weaver must act as an interface between annolet and independent webservices.
 + Weaver should only list services which are active i.e. services whose servers are active.
 + Weaver must provide set of some functionalities which are common in most of the websevices.
-  ++ These can be getXpath, evaluate Xpath
-  ++ event handlers for tracking mouse pointer
-  ++ user registration and validation.
+  - These can be getXpath, evaluate Xpath
+  - event handlers for tracking mouse pointer
+  - user registration and validation.
 + It must be able to interect with a service if a JSON file giving information about functionality
 and methods of web service is provided.
 
@@ -35,10 +35,10 @@ The project is divided into three parts
 + JSON matadata file will be provide information about web services.
 + metadata file contains information about location of webservice related files and action to
 be performed by user  
-  + name of button to be created
-  + HTML and CSS files for UI
-  + JS files for functionality and interaction with server
-  + what to do on click of button
+  - name of button to be created
+  - HTML and CSS files for UI
+  - JS files for functionality and interaction with server
+  - what to do on click of button
 **** Webservice
 + These are the independent microservices for performing different tasks
 *** Middle
