@@ -1,6 +1,6 @@
 #+AUTHOR: RAGHAV MITTAL
 #+EMAIL: raghav.mittal@st.niituniversity.in
-#+TITLE: SSS Studio Weaver
+#+TITLE: SSS Studio Joiner
 
 * Background
 We were working on development of AnnoletJS and web services to demonstrate different features like
@@ -8,14 +8,14 @@ rennaration, tagging, highlighting. But as we progressed we realized that this w
 best way to do this. AnnoletJS code needs to be modified for accommodating each web service. We decided to 
 create webservices independent of annolet and let the annolet run the services on its own with minimal 
 information provided by web service developer. So here we decided to break our project into three parts 
-annolet, weaver, webservice.
+annolet, joiner, webservice.
 
 * Requirements
-The following are the functionalities required from weaver so that user must be able to use different 
+The following are the functionalities required from joiner so that user must be able to use different 
 webservices through annolet
-+ Weaver must act as an interface between annolet and independent webservices.
-+ Weaver should only list services which are active i.e. services whose servers are active.
-+ Weaver must provide set of some functionalities which are common in most of the websevices.
++ Joiner must act as an interface between annolet and independent webservices.
++ Joiner should only list services which are active i.e. services whose servers are active.
++ Joiner must provide set of some functionalities which are common in most of the websevices.
   - These can be getXpath, evaluate Xpath
   - event handlers for tracking mouse pointer
   - user registration and validation.
@@ -26,7 +26,7 @@ and methods of web service is provided.
 The project is divided into three parts
 | Backend            | Middle | Frontend |
 |--------------------+--------+----------|
-| JSON Manifest file | Weaver | Annolet  |
+| JSON Manifest file | Joiner | Annolet  |
 | CSS files          |        |          |
 | JS files           |        |          |
 | HTML files         |        |          |
@@ -43,17 +43,17 @@ be performed by user
 + These are the independent microservices for performing different tasks
 *** Middle
 Middle depends on backend. Frontend depends on middle.
-+ Weaver will act as a broker between webservices and annolet.
++ Joiner will act as a broker between webservices and annolet.
 + It will have few of its own feature like user validation, getXpath, evaluateXpath.
 *** Frontend (annolet)
 + Must load either from SSS Studio portal or in form of bookmarklet
-+ Weaver will take services from backend and weave them into Annolet which is the frontend.
++ Joiner will take services from backend and weave them into Annolet which is the frontend.
 + Here user can interact with these services.
 
 * Design
 + format of metadata file
  ++ may contain much more options, not decided yet.
- ++ the format of this file must be provided from weaver developer side.
+ ++ the format of this file must be provided from joiner developer side.
  ++ for now it looks like this
 #+begin_src js
 {
