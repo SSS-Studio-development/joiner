@@ -42,9 +42,9 @@ annolet.ui = {
     if(this.newTagClass){tagName.className += this.newTagClass;}
     tagName.innerHTML = this.innerHTMLText;
     this.parentTagName.appendChild(tagName);
-  }
-  else {this.parentTagName.innerHTML += "\n" + this.innerHTMLText;}
-},
+    }
+    else {this.parentTagName.innerHTML += "\n" + this.innerHTMLText;}
+  },
 }
 
 annolet.xpath = {
@@ -103,3 +103,6 @@ annolet.handlers =
     this.root = root;
   },
 }
+
+// it contains all the funcitons which will initially run to create container trigger handler etc. fetch data for webservices
+annolet.main =

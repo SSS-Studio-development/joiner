@@ -22,6 +22,24 @@ webservices through annolet
 + It must be able to interect with a service if a JSON file giving information about functionality
 and methods of web service is provided.
 
+* Requirements
+  + Annotate a webpage
+  + act as interface for webservices
+  + store data corresponding to user
+  + User registration and validation
+  + Show old annotations(data) related to a webpage
+
+** Use Cases
+*** Actors
+**** User
+    + load annolet
+    + login to Annolet
+    + save annotations
+**** Webservice developer
+    + provides metadata files which let the service show up in annolet
+    + metadata files provide functionality to annolet
+
+
 * Specs
 The project is divided into three parts
 | Backend            | Middle | Frontend |
