@@ -6,16 +6,19 @@
 var annolet = {};
 
 /* contains all UI related items */
-annolet.ui = {
+annolet.inject = {
+  fileCSS: "#",
   index: 0,
-  parentTagName: "body",
+  HTMLParentTagName: "body",
   newTagName: null,
   newTagId: null,
   newTagClass: null,
-  fileCSS: "#",
-  innerHTMLText: '',
+  innerHTMLText: "",
+  fileJS: "#",
+  JSParentTagName: "head",
 
-  injectCSS: function(){
+  injectCSS: function(cssLocation){
+    if(cssLocation){this.fileCSS = cssLocation;}
     var link = document.createElement('link');
     link.href = this.fileCSS + "?v=" + parseInt(Math.random() * 999); //a random mock version number is added everytime file is called to prevent loading of cached css file by browser.
     link.type = "text/css";
@@ -23,27 +26,49 @@ annolet.ui = {
     document.getElementsByTagName('head')[0].appendChild(link);
   },
 
-  /*
-    parentTagName: name of parent node (optional)(default: body)
-    index: index of parent node under which new element will be created(optional)(default: 0)
-    newTagName: name of new child node to be created(optinal)(default: appends HTML to body)
-    newTagId: id of newTagName (optional)(default: NULL)
-    newTagClass: className of newTagName (optional)(default: NULL)
-    innerHTML: html to be inserted into DOM. (required)
+  injectHTML: function(HTMLParentTagName, index, newTagName, newTagId, newTagClass, innerHTMLText){
+    /*
+      HTMLParentTagName: name of parent node (optional)(default: body)
+      index: index of parent node under which new element will be created(optional)(default: 0)
+      newTagName: name of new child node to be created(optinal)(default: appends HTML to body)
+      newTagId: id of newTagName (optional)(default: NULL)
+      newTagClass: className of newTagName (optional)(default: NULL)
+      innerHTMLText: html to be inserted into DOM. (required)
 
-    if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass
-  */
-  injectHTML: function(){
-  var parent = document.getElementsByTagName(this.parentTagName)[this.index];
-  // if newTagName is given, else append innerHTML to body.
-  if(this.newTagName){
-    var tagName = document.createElement(this.newTagName);
-    if(this.newTagId){tagName.id += ' ' + this.newTagId;}
-    if(this.newTagClass){tagName.className += this.newTagClass;}
-    tagName.innerHTML = this.innerHTMLText;
-    this.parentTagName.appendChild(tagName);
-    }
-    else {this.parentTagName.innerHTML += "\n" + this.innerHTMLText;}
+      if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass
+    */
+    if(HTMLParentTagName){this.HTMLParentTagName = HTMLParentTagName;}
+    if(index){this.index = index;}
+    if(newTagName){this.newTagName = newTagName;}
+    if(newTagId){this.newTagId = newTagId;}
+    if (newTagClass){this.newTagClass = newTagClass;}
+    if(innerHTMLText){this.innerHTMLText;} else{throw "innerHTMLText required"}
+    var parent = document.getElementsByTagName(this.HTMLParentTagName)[this.index];
+    // if newTagName is given, else append innerHTML to body.
+    if(this.newTagName){
+      var tagName = document.createElement(this.newTagName);
+      if(this.newTagId){tagName.id += ' ' + this.newTagId;}
+      if(this.newTagClass){tagName.className += this.newTagClass;}
+      tagName.innerHTML = this.innerHTMLText;
+      this.HTMLParentTagName.appendChild(tagName);
+      }
+    else {this.HTMLParentTagName.innerHTML += "\n" + this.innerHTMLText;}
+  },
+
+  injectJS: function(JSParentTagName, jsLocation){
+
+    /*
+      JSParentTagName(optional)(defaut: 'head')- usually JS is injected into '<head>' but if you want to
+      inject under someother node then specify.
+      jsLocation(required)(default: '#') - location of js file which is to be injected
+    */
+
+    if(JSParentTagName){this.JSParentTagName = JSParentTagName;}
+    if(jsLocation){this.fileJS = jsLocation;} else {throw "jsLocation required"}
+    var script = document.createElement("script");
+    script.type="text/javascript"
+    script.src = this.fileJS;
+    document.getElementsByTagName(this.JSParentTagName)[0].appendChild(script);
   },
 }
 
@@ -52,7 +77,8 @@ annolet.xpath = {
     element: null,
 
     // function to get Xpath to passed element
-    get: function() {
+    get: function(element) {
+        if(element){this.element = element;}
         if (this.element.id !== '') {
             return "//*[@id='" + this.element.id + "']";
         }
@@ -73,30 +99,28 @@ annolet.xpath = {
     },
 
     // function to evaluate element from Xpath
-    evaluate: function() {
+    evaluate: function(xpath) {
+        if(xpath){this.xpath = xpath;}
         return document.evaluate(this.xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     },
-
 }
 
-// function which provides event handler for webservices which want to get mouse clicks
-// it returns the element clicked and root of the document which is in case of HTML DOMs is often '<html>' tag
-
-/*
-BUG:
+annolet.handlers = {
+  // function which provides event handler for webservices which want to get mouse clicks
+  // it returns the element clicked and root of the document which is in case of HTML DOMs is often '<html>' tag
+  /*
+  BUG:
   not returning target and root to annolt.target and annolet.root
-*/
-annolet.handlers =
-{
-    target: '',
-    root: '',
-    mousetrack: function(){
+  */
+  target: '',
+  root: '',
+  mousetrack: function(){
     document.onclick = function(event) {
     if (event === undefined) {
-        event = window.event;
+    event = window.event;
     } // for IE
-      var target = 'target' in event ? event.target : event.srcElement; // for IE
-      var root = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
+    var target = 'target' in event ? event.target : event.srcElement; // for IE
+    var root = document.compatMode === 'CSS1Compat' ? document.documentElement : document.body;
     }
 
     this.target = target;
@@ -106,3 +130,17 @@ annolet.handlers =
 
 // it contains all the funcitons which will initially run to create container trigger handler etc. fetch data for webservices
 annolet.main =
+
+/*
+  1. When user clicks annoelet bookmarklet, it shows up.
+    1 injects annoletJS into DOM
+    2 go to manifest file
+    2.1 gets location of manifest file and get it into host machine
+    3 get all webservices
+    3.1 parses it and injects into DOM
+    3.1.1 get all the objects into stack
+    3.1.2 go through each object and inject html, js, css into DOM one by one.
+    3.1.3 create buttons one by one after only after corresponding files are loaded successfully linked with proper functionality
+    3.1.4 add buttons to UI
+    4 works!
+*/
