@@ -9,4 +9,16 @@
 	"innerHTMLText": "<h1>this script is loaded vola</h1>",
 	"fileJS": "#",
 	"JSParentTagName": "head"
+},
+{
+	"authorName":"abhinav",
+	"fileCSS": null,
+	"index": 0,
+	"HTMLParentTagName": "body",
+	"newTagName": "span",
+	"newTagId": "raghav",
+	"newTagClass": "null",
+	"innerHTMLText": "<h1>this script is loaded vola</h1>",
+	"fileJS": "//rawgit.com/SSS-Studio-development/annoletjs/master/annolet_main.js",
+	"JSParentTagName": "head"
 }
