@@ -1,4 +1,4 @@
-/*
+ou/*
  AUTHOR: Raghav Mittal
  email: raghavmittal101@gmail.com
 */
@@ -128,9 +128,13 @@ annolet.handlers = {
   },
 }
 
-// it contains all the funcitons which will initially run to create container trigger handler etc. fetch data for webservices
-annolet.main =
+annlet.parser = {
+// getManifest
+//  parseManifest
+}
 
+// it contains all the funcitons which will initially run to create container trigger handler etc. fetch data for webservices
+annolet.main = {
 /*
   1. When user clicks annoelet bookmarklet, it shows up.
     1 injects annoletJS into DOM
@@ -144,3 +148,4 @@ annolet.main =
     3.1.4 add buttons to UI
     4 works!
 */
+}
