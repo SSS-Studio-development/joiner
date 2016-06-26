@@ -57,7 +57,7 @@ annolet.inject = {
       if(this.newTagId){tagName.id += ' ' + this.newTagId;}
       if(this.newTagClass){tagName.className += this.newTagClass;}
       tagName.innerHTML = this.innerHTMLText;
-      this.HTMLParentTagName.appendChild(tagName);
+      parent.appendChild(tagName);
       }
     else {this.HTMLParentTagName.innerHTML += "\n" + this.innerHTMLText;}
   },
