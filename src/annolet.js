@@ -1,4 +1,4 @@
-ou/*
+/*
  AUTHOR: Raghav Mittal
  email: raghavmittal101@gmail.com
 */
