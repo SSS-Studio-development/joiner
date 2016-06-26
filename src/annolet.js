@@ -7,7 +7,7 @@ var annolet = {};
 
 /* contains all UI related items */
 annolet.inject = {
-  fileCSS: "#",
+  fileCSS: null,
   index: 0,
   HTMLParentTagName: "body",
   newTagName: null,
@@ -28,8 +28,8 @@ annolet.inject = {
     if(manifestObject.fileJS) this.fileJS = manifestObject.fileJS;
     if(manifestObject.JSParentTagName) this.JSParentTagName = manifestObject.JSParentTagName;
   },
-  injectCSS: function(cssLocation){
-    if(cssLocation){this.fileCSS = cssLocation;}
+
+  injectCSS: function(){
     var link = document.createElement('link');
     link.href = this.fileCSS + "?v=" + parseInt(Math.random() * 999); //a random mock version number is added everytime file is called to prevent loading of cached css file by browser.
     link.type = "text/css";
@@ -59,10 +59,10 @@ annolet.inject = {
       tagName.innerHTML = this.innerHTMLText;
       parent.appendChild(tagName);
       }
-    else {this.HTMLParentTagName.innerHTML += "\n" + this.innerHTMLText;}
+    else {parent.innerHTML += "\n" + this.innerHTMLText;}
   },
 
-  injectJS: function(JSParentTagName, jsLocation){
+  injectJS: function(){
 
     /*
       JSParentTagName(optional)(defaut: 'head')- usually JS is injected into '<head>' but if you want to
@@ -70,8 +70,6 @@ annolet.inject = {
       jsLocation(required)(default: '#') - location of js file which is to be injected
     */
 
-    if(JSParentTagName){this.JSParentTagName = JSParentTagName;}
-    if(jsLocation){this.fileJS = jsLocation;} else {throw "jsLocation required"}
     var script = document.createElement("script");
     script.type="text/javascript"
     script.src = this.fileJS;
