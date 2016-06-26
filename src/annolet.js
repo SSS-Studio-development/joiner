@@ -17,6 +17,17 @@ annolet.inject = {
   fileJS: "#",
   JSParentTagName: "head",
 
+  init: function(manifestObject){
+    if(manifestObject.fileCSS) this.fileCSS = manifestObject.fileCSS;
+    if(manifestObject.index) this.index = manifestObject.index;
+    if(manifestObject.HTMLParentTagName) this.HTMLParentTagName = manifestObject.HTMLParentTagName;
+    if(manifestObject.newTagName) this.newTagName = manifestObject.newTagName;
+    if(manifestObject.newTagId) this.newTagId = manifestObject.newTagId;
+    if(manifestObject.newTagClass) this.newTagClass = manifestObject.newTagClass;
+    if(manifestObject.innerHTMLText) this.innerHTMLText = manifestObject.innerHTMLText;
+    if(manifestObject.fileJS) this.fileJS = manifestObject.fileJS;
+    if(manifestObject.JSParentTagName) this.JSParentTagName = manifestObject.JSParentTagName;
+  },
   injectCSS: function(cssLocation){
     if(cssLocation){this.fileCSS = cssLocation;}
     var link = document.createElement('link');
