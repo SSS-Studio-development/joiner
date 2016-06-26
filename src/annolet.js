@@ -37,7 +37,7 @@ annolet.inject = {
     document.getElementsByTagName('head')[0].appendChild(link);
   },
 
-  injectHTML: function(HTMLParentTagName, index, newTagName, newTagId, newTagClass, innerHTMLText){
+  injectHTML: function(){
     /*
       HTMLParentTagName: name of parent node (optional)(default: body)
       index: index of parent node under which new element will be created(optional)(default: 0)
@@ -48,12 +48,8 @@ annolet.inject = {
 
       if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass
     */
-    if(HTMLParentTagName){this.HTMLParentTagName = HTMLParentTagName;}
-    if(index){this.index = index;}
-    if(newTagName){this.newTagName = newTagName;}
-    if(newTagId){this.newTagId = newTagId;}
-    if (newTagClass){this.newTagClass = newTagClass;}
-    if(innerHTMLText){this.innerHTMLText;} else{throw "innerHTMLText required"}
+
+
     var parent = document.getElementsByTagName(this.HTMLParentTagName)[this.index];
     // if newTagName is given, else append innerHTML to body.
     if(this.newTagName){
@@ -139,7 +135,7 @@ annolet.handlers = {
   },
 }
 
-annlet.parser = {
+annolet.parser = {
 // getManifest
 //  parseManifest
 }
