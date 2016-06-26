@@ -5,8 +5,8 @@
 	"HTMLParentTagName": "body",
 	"newTagName": "span",
 	"newTagId": "raghav",
-	"newTagClass": null,
+	"newTagClass": "null",
 	"innerHTMLText": "<h1>this script is loaded vola</h1>",
 	"fileJS": "#",
-	"JSParentTagName": "head",
+	"JSParentTagName": "head"
 }
