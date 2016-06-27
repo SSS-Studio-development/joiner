@@ -1,24 +1,15 @@
 {
-	"authorName":"raghavmittal101",
-	"fileCSS": "#",
+	"fileCSS": "//cdn.rawgit.com/SSS-Studio-development/annoletjs/master/annolet.css",
 	"index": 0,
 	"HTMLParentTagName": "body",
-	"newTagName": "span",
-	"newTagId": "raghav",
-	"newTagClass": "null",
-	"innerHTMLText": "<h1>this script is loaded vola</h1>",
-	"fileJS": "#",
-	"JSParentTagName": "head"
-},
-{
-	"authorName":"abhinav",
-	"fileCSS": null,
-	"index": 0,
-	"HTMLParentTagName": "body",
-	"newTagName": "span",
-	"newTagId": "raghav",
-	"newTagClass": "null",
-	"innerHTMLText": "<h1>this script is loaded vola</h1>",
-	"fileJS": "//rawgit.com/SSS-Studio-development/annoletjs/master/annolet_main.js",
-	"JSParentTagName": "head"
+	"newTagName": "div",
+	"newTagId": "annolet-container",
+	"newTagClass": null,
+	"innerHTMLText": "<ul id='annolet' class=annolet-tools-menu>
+	<span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span>
+	<span id='annolet' style='color:grey;'>|</span>
+	<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>
+	</ul>",
+	"fileJS": "//rawgit.com/SSS-Studio-development/joiner/master/annolet_main.js",
+	"JSParentTagName": "head",
 }
