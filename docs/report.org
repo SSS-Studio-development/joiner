@@ -5,7 +5,7 @@
 * Background
 We were working on development of AnnoletJS and web services to demonstrate different features like
 rennaration, tagging, highlighting. But as we progressed we realized that this was not scalable and the
-best way to do this. AnnoletJS code needs to be modified for accommodating each web service. We decided to 
+best way to do this. AnnoletJS code needs to be modified every time a new web service is introduced. We decided to 
 create webservices independent of annolet and let the annolet run the services on its own with minimal 
 information provided by web service developer. So here we decided to break our project into three parts 
 annolet, joiner, webservice.
@@ -27,7 +27,7 @@ and methods of web service is provided.
   + act as interface for webservices
   + store data corresponding to user
   + User registration and validation
-  + Show old annotations(data) related to a webpage
+  + Show stored annotations(data) related to a webpage
 
 ** Use Cases
 *** Actors
