@@ -1,5 +1,5 @@
 {
-	initial : [
+	"initial" : [
 		{
 		"fileCSS": "//cdn.rawgit.com/SSS-Studio-development/annoletjs/master/annolet.css",
 		"index": 0,
