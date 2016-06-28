@@ -5,11 +5,7 @@ initial = {
 	"newTagName": "div",
 	"newTagId": "annolet-container",
 	"newTagClass": null,
-	"innerHTMLText": "<ul id='annolet' class=annolet-tools-menu>
-	<span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span>
-	<span id='annolet' style='color:grey;'>|</span>
-	<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>
-	</ul>",
+	"innerHTMLText": "<ul id='annolet' class=annolet-tools-menu><span id='annolet' style='border-radius:10px;  color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span id='annolet' style='color:grey;'>|</span>	<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li>	</ul>",
 	"fileJS": "//rawgit.com/SSS-Studio-development/joiner/master/annolet_main.js",
 	"JSParentTagName": "head",
 }
