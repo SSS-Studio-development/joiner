@@ -15,9 +15,7 @@ annolet.keys = {
   fileJS: "#",
   JSParentTagName: "head",
   buttonName: null,
-  buttonOnClick: null
-}
-annolet.inject = {
+  buttonOnClick: null,
   init: function(manifestObject){
     if(manifestObject.fileCSS) annolet.keys.fileCSS = manifestObject.fileCSS;
     if(manifestObject.index) annolet.keys.index = manifestObject.index;
@@ -31,6 +29,8 @@ annolet.inject = {
     if(manifestObject.buttonName) annolet.keys.buttonName = manifestObject.buttonName;
     if(manifestObject.buttonOnClick) annolet.keys.buttonOnClick = manifestObject.buttonOnClick;
   },
+}
+annolet.inject = {
   injectCSS: function(){
     var link = document.createElement('link');
     link.href = annolet.keys.fileCSS + "?v=" + parseInt(Math.random() * 999); //a random mock version number is added everytime file is called to prevent loading of cached css file by browser.
