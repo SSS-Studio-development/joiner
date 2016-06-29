@@ -1,0 +1,76 @@
+#+AUTHOR: Raghav Mittal
+#+TITLE: Annolet Joiner
+
+* Background
+We were working on development of AnnoletJS to demonstrate different features like rennaration, tagging, highlighting but the model we followed needed annolet code to be modified whenever a new feature was introduced. This was not scalable and was not the best way. We decided to separate webservices and annolet. Now our project is divided into three components - Annolet, Joiner, Webservices. 
+
+* Requirements
+ - Joiner must be able to expose user to every feature of webservice using Annolet as an interface.
+ - Joiner must load minimum required files on client side to run webservice.
+
+* Use cases
+- Actors: User and developer
+  - /User/: user will interact with DOM through annolet frontend which will act as interface between webservice and user.
+  - /Webservice/: webservice will contain functions which will manipulate DOM. 
+
+
+
+* System
+- Let /p/ be the file of type /JSON/, which contain information about APIs and paths of files which are required to be loaded on clientside to expose user to webservice. Template of this file is predefined by Joiner developer.
+
+- there must be constrains and users and views also.
+
+- Let /q/ be the DOM tree of type /HTML/.
+- Let /r/ be the CSS and JS files.
+- Let /s/ be the manipulated DOM tree of type /HTML/.
+
+then the system called /joiner/ is defined as
+- joiner(p, q, r) = s where r depends on p and s depends on p,q,r.
+
+* Design
+** Classes
+*** Class-responsibility-collaboration Table
+| Class Name | Responsibility(s)                                               | Collaborator(s) |
+|------------+-----------------------------------------------------------------+-----------------|
+| keys       | - get JSON file data                                            |                 |
+|            | - store data into array of objects                              |                 |
+|------------+-----------------------------------------------------------------+-----------------|
+| inject     | - inject CSS file into DOM                                      | - keys          |
+|            | - inject HTML into DOM                                          |                 |
+|            | - inject JS file into DOM                                       |                 |
+|------------+-----------------------------------------------------------------+-----------------|
+| create     | - run functions on each object according to the given meta data | - keys          |
+|            |                                                                 | - inject        |
+|            |                                                                 |                 |
+
+*** Detailed Design of Classes
+**** Class keys 
+| keys                       |
+|----------------------------|
+| fileCSS: string            |
+| index: integer             |
+| HTMLParentTagName: string  |
+| newTagName: string         |
+| newTagId: string           |
+| newTagClass: string        |
+| innerHTMLText: string      |
+| fileJS: string             |
+| JSParentTagName: string    |
+| buttonName: string         |
+| buttonOnClick: string      |
+| init: function(jsonObject) |
+| loadJSON: function()       |
+|                            |
+
+**** Class inject
+| inject                 |
+|------------------------|
+| injectCSS: function()  |
+| injectHTML: function() |
+| injectJS: function()   | 
+
+**** Class create
+| create                   |
+|--------------------------|
+| loadServices: function() |
+| populateList: function() |
