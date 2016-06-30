@@ -29,6 +29,26 @@ annolet.keys = {
     if(manifestObject.buttonName) annolet.keys.buttonName = manifestObject.buttonName;
     if(manifestObject.buttonOnClick) annolet.keys.buttonOnClick = manifestObject.buttonOnClick;
   },
+
+  getJSON: function(){
+    /*
+      This function is for getting json from server and loading it to
+      frontend. it will help us in calling webservices to from using
+      manifest file JSON file.
+    */
+    var pathJSON = "https://rawgit.com/SSS-Studio-development/joiner/master/src/jsonj.json";
+    $.getJSON(pathJSON, function (json) {
+      annolet.keys.json = json;
+/*
+      for(var i=0; i<json.intial.length; i++){
+        annolet.inject.init(json.initial[i]);
+        annolet.inject.injectCSS();
+        annolet.inject.injectHTML();
+        annolet.inject.injectJS();
+      }
+*/
+    });
+  }
 }
 annolet.inject = {
   injectCSS: function(){
@@ -126,25 +146,7 @@ annolet.handlers = {
     this.root = root;
   },
 }
-annolet.parser = {
-  getJSON: function(){
-    /*
-      This function is for getting json from server and loading it to
-      frontend. it will help us in calling webservices to from using
-      manifest file JSON file.
-    */
-    var pathJSON = "https://rawgit.com/SSS-Studio-development/joiner/master/src/jsonj.json";
-    $.getJSON(pathJSON, function (json) {
-      annolet.keys.json =
-      for(var i=0; i<json.intial.length; i++){
-        annolet.inject.init(json.initial[i]);
-        annolet.inject.injectCSS();
-        annolet.inject.injectHTML();
-        annolet.inject.injectJS();
-      }
-    });
-  }
-}
+
 // it contains all the funcitons which will initially run to create container trigger handler etc. fetch data for webservices
 annolet.main = {
 /*
