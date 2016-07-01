@@ -1,24 +1,37 @@
 {
-	"initial": [{
-		"fileCSS": "//cdn.rawgit.com/SSS-Studio-development/annoletjs/master/annolet.css",
-		"index": 0,
-		"HTMLParentTagName": "body",
-		"newTagName": "div",
-		"newTagId": "annolet-container",
-		"newTagClass": null,
-		"innerHTMLText": "<ul id='annolet' class=annolet-tools-menu><span id='annolet' style='border-radius:10px; color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span id='annolet' style='color:grey;'>|</span><li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li></ul>",
-		"fileJS": "//rawgit.com/SSS-Studio-development/joiner/master/src/annolet_main.js",
-		"JSParentTagName": "head"
-	}],
-	"services": [{
-		"fileCSS": "//cdn.rawgit.com/SSS-Studio-development/annoletjs/master/annolet.css",
-		"index": 0,
-		"HTMLParentTagName": "body",
-		"newTagName": "div",
-		"newTagId": "annolet-container",
-		"newTagClass": null,
-		"innerHTMLText": "<ul id='annolet' class=annolet-tools-menu><span id='annolet' style='border-radius:10px; color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span id='annolet' style='color:grey;'>|</span><li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li></ul>",
-		"fileJS": "//rawgit.com/SSS-Studio-development/joiner/master/src/annolet_main.js",
-		"JSParentTagName": "head"
-	}]
+	"initial" :
+	[
+		{
+			"fileCSS": "//cdn.rawgit.com/SSS-Studio-development/annoletjs/master/annolet.css",
+			"HTMLParentTagName": "body",
+			"HTMLParentTagNameIndex": 0,
+			"newTagName": "div",
+			"newTagId": "annolet-container",
+			"newTagClass": null,
+			"innerHTMLText": "<ul id='annolet' class=annolet-tools-menu><span id='annolet' style='border-radius:10px; color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span id='annolet' style='color:grey;'>|</span><li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li></ul>",
+			"fileJS": "//rawgit.com/SSS-Studio-development/joiner/master/src/annolet_main.js",
+			"JSParentTagName": "head",
+			"JSParentTagNameIndex": 0,
+			"menuButtonName": null,
+			"eventOnClick": null,
+		}
+	],
+
+	"services" :
+	[
+		{
+			"fileCSS": null,
+			"HTMLParentTagName": null,
+			"HTMLParentTagNameIndex": null,
+			"newTagName": null,
+			"newTagId": null,
+			"newTagClass": null,
+			"innerHTMLText": null,
+			"fileJS": "https://rawgit.com/raghavmittal101/annoletjs/master/annolet_main.js",
+			"JSParentTagName": "head",
+			"JSParentTagNameIndex": 0,
+			"menuButtonName": "translate",
+			"eventOnClick": "run_langtrans()",
+		}
+	]
 }
