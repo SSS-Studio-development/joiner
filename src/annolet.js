@@ -213,6 +213,9 @@ head.appendChild(scr);
 //   menuButtonName: null, // name of button which will be created in annolet interface
 //   eventOnClick: null, // function to be called when user clicks dom element. to pass xpath through this function. pass "annolet.xpath"
 // }
+
+var $j = jQuery.noConflict();
+
 var annolet={};
 
 annolet.getJSON = function(){
@@ -222,8 +225,7 @@ annolet.getJSON = function(){
         manifest file JSON file.
       */
       var pathJSON = "https://rawgit.com/SSS-Studio-development/joiner/master/src/jsonj.json"+ "?v=" + parseInt(Math.random() * 999);
-      var manifest;
-      $.getJSON(pathJSON, function(json) {
+      $j.getJSON(pathJSON, function(json) {
           annolet.metafile = json;
       });
   };
@@ -231,59 +233,81 @@ annolet.connectWebservices = function() {
     var services = annolet.metafile.services;
     for(var i = 0; i < services.length; i++) {
         services[i].id = i + 1; // reserving 0 for exit.
-        if (services[i].fileCSS) {
+        if (services[i].fileCSS !== null) {
             annolet.inject.injectCSS(services[i]);
+            console.log("injectedCSS");
         }
-        if (services[i].innerHTMLText) {
+        if (services[i].innerHTMLText !== null) {
             annolet.inject.injectHTML(services[i]);
+            console.log("injectedHTML");
         }
-        if (services[i].fileJS) {
+        if (services[i].fileJS !== null) {
             annolet.inject.injectJS(services[i]);
+            console.log("injectedJS");
         }
-        if (services[i].menuButtonName) {
+        if (services[i].menuButtonName !== null) {
             annolet.createButtons(services[i]);
+            console.log("buttons done");
         }
     }
 };
 annolet.inject = {
     injectCSS: function(service) {
-        var link = document.createElement("link");
-        link.href = service.fileCSS + "?v=" + parseInt(Math.random() * 999); //a random mock version number is added everytime file is called to prevent loading of cached css file by browser.
-        link.type = "text/css";
-        link.rel = "stylesheet";
-        document.getElementsByTagName("head")[0].appendChild(link);
+      var link = document.createElement('link');
+      // using rawgit.com MaxCDN.. files directly linked to git repo 'annoletjs/master'
+      link.href = service.fileCSS; //random version number removed bcoz some browser take it as text file and not as CSS.
+      link.type = "text/css";
+      link.rel = "stylesheet";
+      document.getElementsByTagName('head')[0].appendChild(link);
     },
-    injectHTML: function(service) { /*      HTMLParentTagName: name of parent node (optional)(default: body)      index: index of parent node under which new element will be created(optional)(default: 0)      newTagName: name of new child node to be created(optinal)(default: appends HTML to body)      newTagId: id of newTagName (optional)(default: NULL)      newTagClass: className of newTagName (optional)(default: NULL)      innerHTMLText: html to be inserted into DOM. (required)      if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass    */
+    injectHTML: function(service) {
+    // HTMLParentTagName: name of parent node (optional)(default: body)
+    // index: index of parent node under which new element will be created(optional)(default: 0)
+    // newTagName: name of new child node to be created(optinal)(default: appends HTML to body)
+    // newTagId: id of newTagName (optional)(default: NULL)
+    // newTagClass: className of newTagName (optional)(default: NULL)
+    // innerHTMLText: html to be inserted into DOM. (required)
+    // if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass
+
         var parent = document.getElementsByTagName(service.HTMLParentTagName)[service.HTMLParentTagNameIndex]; // if newTagName is given, else append innerHTML to body.
-        if (service.newTagName) {
+        if (service.newTagName !== null) {
             var tagName = document.createElement(service.newTagName);
-            if (service.newTagId) {
+            if (service.newTagId !== null) {
                 tagName.id += " " + service.newTagId;
             }
-            if (service.newTagClass) {
+            if (service.newTagClass !== null) {
                 tagName.className += service.newTagClass;
             }
             tagName.innerHTML = service.innerHTMLText;
             parent.appendChild(tagName);
+            console.log("injectingHTML");
         } else {
             parent.innerHTML += "\n" + service.innerHTMLText;
+            console.log("injectingHTML");
         }
     },
-    injectJS: function(service) { /*      JSParentTagName(optional)(defaut: 'head')- usually JS is injected into '<head>' but if you want to      inject under someother node then specify.      jsLocation(required)(default: '#') - location of js file which is to be injected    */
+    injectJS: function(service) {
+      // JSParentTagName(optional)(defaut: 'head')- usually JS is injected into '<head>' but if you want to
+      // inject under someother node then specify.
+      // jsLocation(required)(default: '#') - location of js file which is to be injected
+
         var script = document.createElement("script");
         script.type = "text/javascript";
         script.src = service.fileJS;
-        document.getElementsByTagName(service.JSParentTagName)[0].appendChild(script);
+        document.getElementsByTagName(service.JSParentTagName)[service.JSParentTagNameIndex].appendChild(script);
+        console.log("injectingJS");
     },
 };
 annolet.buttonHTML = "";
 annolet.createButtons = function(service) {
-    annolet.buttonHTML += "<li id='annolet' class=annolet-tools-menu-item onclick=" + service.onClickEvent + ">" + service.buttonName + "</li>";
+    annolet.buttonHTML += "<li id='annolet' class=annolet-tools-menu-item onclick=" + service.eventOnClick + ">" + service.menuButtonName + "</li>";
+    console.log("butons created");
 };
 annolet.createUI = function(){
-  var init = annolet.metafile.initial;
-  init.innerHTMLText = "<ul id='annolet' class=annolet-tools-menu><span id='annolet' style='border-radius:10px; color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span id='annolet' style='color:grey;'>|</span>"+ annolet.buttonHTML +"<li id='annolet' class=annolet-tools-menu-item id=exit-btn onclick='annolet_btn=0;'>exit</li></ul>"
-  annolet.inject.injectCSS(init);
-  annolet.inject.injectHTML(init);
-  annolet.inject.injectJS(init);
+  var menuUI = annolet.metafile.initial[0];
+  menuUI.innerHTMLText = "<ul id='annolet' class=annolet-tools-menu><span id='annolet' style='border-radius:10px; color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span id='annolet' style='color:grey;'>|</span>"+ annolet.buttonHTML +"<li id='annolet' class=annolet-tools-menu-item id=exit-btn >exit</li></ul>";
+  annolet.inject.injectCSS(menuUI);
+  annolet.inject.injectHTML(menuUI);
+  annolet.inject.injectJS(menuUI);
+  console.log("ui created");
 };
