@@ -27,8 +27,7 @@
 		"JSParentTagNameIndex": 0,
 		"menuButtonName": "translate",
 		"eventOnClick": "run_langtrans()"
-	},
-	{
+	}, {
 		"fileCSS": null,
 		"HTMLParentTagName": null,
 		"HTMLParentTagNameIndex": null,
@@ -41,8 +40,7 @@
 		"JSParentTagNameIndex": null,
 		"menuButtonName": null,
 		"eventOnClick": null
-	},
-	{
+	}, {
 		"fileCSS": null,
 		"HTMLParentTagName": null,
 		"HTMLParentTagNameIndex": null,
@@ -55,6 +53,5 @@
 		"JSParentTagNameIndex": null,
 		"menuButtonName": null,
 		"eventOnClick": null
-	},
-	]
+	}]
 }
