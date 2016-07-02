@@ -22,7 +22,7 @@
 		"newTagId": null,
 		"newTagClass": null,
 		"innerHTMLText": null,
-		"fileJS": "//rawgit.com/raghavmittal101/annoletjs/master/annolet_main.js",
+		"fileJS": "//rawgit.com/raghavmittal101/webservices/translation/annolet_main.js",
 		"JSParentTagName": "head",
 		"JSParentTagNameIndex": 0,
 		"menuButtonName": "translate",
@@ -35,11 +35,11 @@
 		"newTagId": null,
 		"newTagClass": null,
 		"innerHTMLText": null,
-		"fileJS": null,
-		"JSParentTagName": null,
-		"JSParentTagNameIndex": null,
-		"menuButtonName": null,
-		"eventOnClick": null
+		"fileJS": "//rawgit.com/raghavmittal101/webservices/phonetics/annolet_main.js",
+		"JSParentTagName": "head",
+		"JSParentTagNameIndex": 0,
+		"menuButtonName": "phonetics",
+		"eventOnClick": "run_phoneticConversion()"
 	}, {
 		"fileCSS": null,
 		"HTMLParentTagName": null,
