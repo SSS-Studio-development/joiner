@@ -109,7 +109,7 @@ annolet.createButtons = function(service) {
 };
 annolet.createUI = function(){
   var menuUI = annolet.metafile.initial[0];
-  menuUI.innerHTMLText = "<ul id='annolet' class=annolet-tools-menu><span id='annolet' style='border-radius:10px; color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span id='annolet' style='color:grey;'>|</span>"+ annolet.buttonHTML +"<li id='annolet' class=annolet-tools-menu-item id=exit-btn >exit</li></ul>";
+  menuUI.innerHTMLText = "<ul id='annolet' class=annolet-tools-menu><span id='annolet' style='border-radius:10px; color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span id='annolet' style='color:grey;'>|</span>"+ annolet.buttonHTML +"<li id='annolet' class=annolet-tools-menu-item id=annolet-exit-btn >exit</li></ul>";
   annolet.inject.injectCSS(menuUI);
   annolet.inject.injectHTML(menuUI);
   annolet.inject.injectJS(menuUI);
