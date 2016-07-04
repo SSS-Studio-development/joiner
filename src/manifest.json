@@ -1,13 +1,13 @@
 {
 	"initial": [{
-		"fileCSS": "//cdn.rawgit.com/SSS-Studio-development/annoletjs/master/annolet.css",
+		"fileCSS": "//rawgit.com/raghavmittal101/webservices/annolet/annolet.css",
 		"HTMLParentTagName": "body",
 		"HTMLParentTagNameIndex": 0,
 		"newTagName": "div",
 		"newTagId": "annolet-container",
 		"newTagClass": null,
 		"innerHTMLText": null,
-		"fileJS": "//rawgit.com/SSS-Studio-development/joiner/master/src/annolet_main.js",
+		"fileJS": "//rawgit.com/raghavmittal101/webservices/annolet/annolet_main.js",
 		"JSParentTagName": "head",
 		"JSParentTagNameIndex": 0,
 		"menuButtonName": null,
