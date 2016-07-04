@@ -2,6 +2,7 @@
 #+TITLE: Joiner Implementation
 
 ** Namespace
+#+NAME: namespace
 #+begin_src js :tangle joiner.js
 var annolet = {};
 #+end_src
@@ -26,7 +27,7 @@ annolet.keys = {
     <<annolet.keys.init>>,
   loadJSON:
     <<annolet.keys.loadJSON>>,
-}
+};
 #+end_src
 #+NAME: annolet.keys.init
 #+begin_src js :exports none
@@ -47,37 +48,36 @@ function(manifestObject){
 #+NAME: annolet.keys.loadJSON
 #+begin_src js :exports none
 function(){
-  /*
-    This function is for getting json from server and loading it to
-    frontend. it will help us in calling webservices to from using
-    manifest file JSON file.
-  */
+      /*
+        This function is for getting json from server and loading it to
+        frontend. it will help us in calling webservices to from using
+        manifest file JSON file.
+      */
   var pathJSON = "https://rawgit.com/SSS-Studio-development/joiner/master/src/jsonj.json";
   $.getJSON(pathJSON, function (json) {
     annolet.keys.json = json;
-/*
-      for(var i=0; i<json.intial.length; i++){
-        annolet.inject.init(json.initial[i]);
-        annolet.inject.injectCSS();
-        annolet.inject.injectHTML();
-        annolet.inject.injectJS();
-      }
-*/
+    /*
+          for(var i=0; i<json.intial.length; i++){
+            annolet.inject.init(json.initial[i]);
+            annolet.inject.injectCSS();
+            annolet.inject.injectHTML();
+            annolet.inject.injectJS();
+          }
+    */
   });
 }
 #+end_src
-
 *** inject
 #+NAME: class_inject
 #+begin_src js :noweb yes :tangle joiner.js
 annolet.inject = {
-  injectCSS:
+  injectJS:
     <<annolet.inject.injectJS>>,
   injectHTML: 
     <<annolet.inject.injectHTML>>,
   injectCSS:
     <<annolet.inject.injectCSS>>,
-}
+};
 #+end_src
 #+NAME: annolet.inject.injectJS
 #+begin_src js :exports none
@@ -88,7 +88,7 @@ function(){
     jsLocation(required)(default: '#') - location of js file which is to be injected
   */
   var script = document.createElement("script");
-  script.type="text/javascript"
+  script.type="text/javascript";
   script.src = annolet.keys.fileJS;
   document.getElementsByTagName(annolet.keys.JSParentTagName)[0].appendChild(script);
 }
@@ -131,7 +131,11 @@ function(){
 #+NAME: class_create
 #+begin_src js :tangle joiner.js
 annolet.create={
-  loadServices: function(),
-  populateList: function()
-}
+  loadServices: function(){},
+  populateList: function(){},
+};
+#+end_src
+#+NAME: annolet.create.loadServices
+#+begin_src js
+
 #+end_src

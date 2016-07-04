@@ -16,16 +16,16 @@ We were working on development of AnnoletJS to demonstrate different features li
 
 
 * System
-- Let /p/ be the file of type /JSON/, which contain information about APIs and paths of files which are required to be loaded on clientside to expose user to webservice. Template of this file is predefined by Joiner developer.
-
-- there must be constrains and users and views also.
-
+- Let /p/ be the file of type /JSON/, which contains information about APIs and paths of files which will be loaded on clientside. Template of this file is predefined by Joiner developer.
 - Let /q/ be the DOM tree of type /HTML/.
-- Let /r/ be the CSS and JS files.
+- Let /r/ be the CSS and JS files required by webservices.
 - Let /s/ be the manipulated DOM tree of type /HTML/.
-
+- Let /u/ be the user.
 then the system called /joiner/ is defined as
-- joiner(p, q, r) = s where r depends on p and s depends on p,q,r.
+- joiner(p, q, r, u) = s where r depends on p and s depends on p,q,r.
+
+** Constraints
+u:
 
 * Design
 ** Classes
