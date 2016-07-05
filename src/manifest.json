@@ -53,5 +53,18 @@
 		"JSParentTagNameIndex": 0,
 		"menuButtonName": "Text2Speech",
 		"eventOnClick": "listenOnSelection()"
+	}, {
+		"fileCSS": null,
+		"HTMLParentTagName": null,
+		"HTMLParentTagNameIndex": null,
+		"newTagName": null,
+		"newTagId": null,
+		"newTagClass": null,
+		"innerHTMLText": null,
+		"fileJS": "//rawgit.com/raghavmittal101/webservices/tagging/annolet_main.js",
+		"JSParentTagName": "head",
+		"JSParentTagNameIndex": 0,
+		"menuButtonName": "Tagger",
+		"eventOnClick": "do_tagging()"
 	}]
 }
