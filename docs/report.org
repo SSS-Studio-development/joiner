@@ -29,8 +29,8 @@ The joiner has following components
 
 * Design
 + format of metadata file
- ++ may contain much more options, not decided yet.
- ++ for now it looks like this
+ + may contain much more options, not decided yet.
+ + for now it looks like this
 #+begin_src js
 {
   fileCSS: null,  // location of CSS file to be injected into DOM
