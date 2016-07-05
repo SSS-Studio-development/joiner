@@ -47,7 +47,3 @@ The joiner has following components
   eventOnClick: null, // function to be called when user clicks dom element.
 }
 #+end_src
-
-#+CAPTION: Design
-#+NAME: fig:design.png
-[[./design.png]]
