@@ -3,116 +3,51 @@
 #+TITLE: SSS Studio Joiner
 
 * Background
-We were working on development of AnnoletJS and web services to demonstrate different features like
-rennaration, tagging, highlighting. But as we progressed we realized that this was not scalable and the
-best way to do this. AnnoletJS code needs to be modified every time a new web service is introduced. We decided to 
-create webservices independent of annolet and let the annolet run the services on its own with minimal 
-information provided by web service developer. So here we decided to break our project into three parts 
-annolet, joiner, webservice.
+We were working on development of AnnoletJS to demonstrate different features like rennaration, tagging, highlighting but the model we followed needed annolet code to be modified whenever a new feature was introduced. This was not scalable and was not the best way. We decided to separate webservices and annolet. Now our project is divided into two components - Joiner, Webservices.
 
 * Requirements
-The following are the functionalities required from joiner so that user must be able to use different 
-webservices through annolet
-+ Joiner must act as an interface between annolet and independent webservices.
-+ Joiner should only list services which are active i.e. services whose servers are active.
-+ Joiner must provide set of some functionalities which are common in most of the websevices.
-  - These can be getXpath, evaluate Xpath
-  - event handlers for tracking mouse pointer
-  - user registration and validation.
-+ It must be able to interect with a service if a JSON file giving information about functionality
-and methods of web service is provided.
-
-* Requirements
-  + Annotate a webpage
-  + act as interface for webservices
-  + store data corresponding to user
-  + User registration and validation
-  + Show stored annotations(data) related to a webpage
+  + User must be able to use different webservices to annotate the document.
+  + Provide persistance for all the webservices.
 
 ** Use Cases
-*** Actors
-**** User
-    + load annolet
-    + login to Annolet
-    + save annotations
-**** Webservice developer
-    + provides metadata files which let the service show up in annolet
-    + metadata files provide functionality to annolet
+    + User can play with document using webservices.
+    + User can save the present state of document.
+    + Webservice developer could add service to joiner.
 
 
 * Specs
-The project is divided into three parts
-| Backend            | Middle | Frontend |
-|--------------------+--------+----------|
-| JSON Manifest file | Joiner | Annolet  |
-| CSS files          |        |          |
-| JS files           |        |          |
-| HTML files         |        |          |
+The joiner has following components
++ JSON Manifest file
++ JoinerJS
 
-*** Backend
-+ JSON matadata file will be provide information about web services.
-+ metadata file contains information about location of webservice related files and action to
-be performed by user  
-  - name of button to be created
-  - HTML and CSS files for UI
-  - JS files for functionality and interaction with server
-  - what to do on click of button
-**** Webservice
-+ These are the independent microservices for performing different tasks
-*** Middle
-Middle depends on backend. Frontend depends on middle.
-+ Joiner will act as a broker between webservices and annolet.
-+ It will have few of its own feature like user validation, getXpath, evaluateXpath.
-*** Frontend (annolet)
-+ Must load either from SSS Studio portal or in form of bookmarklet
-+ Joiner will take services from backend and weave them into Annolet which is the frontend.
-+ Here user can interact with these services.
++ Manifest file will be provide information about web services. It is a JSON file which contains information about
+  - name of menu option to be created and name of function to be called to run webservice.
+  - HTML and CSS files needed for UI
+  - JS files needed for functionality and interaction with server
++ For User Interface, webservice called Annolet will be loaded first. It will provide user interface for Menu which will contain options for all other webservices.
++ Joiner JS programme will use manifest file to locate and load the webservices by injecting JS and HTML/CSS given in manifest into DOM. Hence exposing user directly to webservices.
 
 * Design
 + format of metadata file
  ++ may contain much more options, not decided yet.
- ++ the format of this file must be provided from joiner developer side.
  ++ for now it looks like this
 #+begin_src js
 {
- webServiceName:'' ,
- authorName:'' ,
- btn-name:'' ,
- jsFiles:['',] ,
- htmlFiles:['',] ,
- cssFiles:['',] ,
+  fileCSS: null,  // location of CSS file to be injected into DOM
+  HTMLParentTagName: "body",  // tag name under which new HTML tag will be appended
+  HTMLParentTagNameIndex: 0, // index of the parent tag if there are multiple tags of same name
+  newTagName: null, // name of new tag to be created
+  newTagId: null, // ID of new tag
+  newTagClass: null, //Class of new tag
+  innerHTMLText: "", //HTML which will be wrapped inside body of new tag.
+  fileJS: "#", // location of javascript file which will be injected into DOM.
+  JSParentTagName: "head", // tag name under which new <script> tag will be appended.
+  JSParentTagNameIndex: 0, // index of the parent tag if there are multiple tags of same name
+  menuButtonName: null, // name of button which will be created in annolet interface
+  eventOnClick: null, // function to be called when user clicks dom element.
 }
 #+end_src
- 
-- /jsFiles/ : array of file(s) which contain the minimum required javascript which must be loaded on frontend to run the webservice. 
-- /htmlFiles/ & /cssFiles/: array of HTML and CSS files required for extra UI additional to annolet (if required).
-+ A function will populate Annolet menu after going through all metadata files.
 
 #+CAPTION: Design
 #+NAME: fig:design.png
 [[./design.png]]
-
-* Code
-** mock json file
-#+NAME: mock JSON file
-#+begin_src js :tangle webservices/mock.json
-{
- authorName: 'Raghav',
- serviceName: 'mock',
- buttonName: 'button',
- cssFile: ['path.css'],
- htmlFile: ['path.html'],
- jsFile: ['path.js']
-}
-#+end_src
-** function fetchMetadata()
-This function reads json files and bring them to local machine for faster access.
-** function populate()
-This function should find read json metadata and populate all annolet menu according to the button names.
-#+begin_src js
-
-#+end_src
-** function getCSS(buttonName)
-Get the CSS files corresponding to button name.
-** function injectFile(buttonName, fileType)
-fetches files from other servers to inject into DOM of present URL.
