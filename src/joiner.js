@@ -82,7 +82,7 @@ annolet.inject = {
             if (service.newTagClass !== null) {
                 tagName.className += service.newTagClass;
             }
-            $j.ajax({ url: 'service.innerHTMLText', success: function(data) { 
+            $j.ajax({ url: service.innerHTMLText, success: function(data) { 
              tagName.innerHTML = data;
              parent.appendChild(tagName);
              console.log("injectingHTML");} 
