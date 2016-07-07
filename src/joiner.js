@@ -115,3 +115,9 @@ annolet.createUI = function(){
   annolet.inject.injectJS(menuUI);
   console.log("ui created");
 };
+
+annolet.getJSON();
+window.annolet.metafile.onload(function(){
+  annolet.connectWebservices();
+  annolet.createUI();
+})
