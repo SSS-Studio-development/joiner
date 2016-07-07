@@ -10,7 +10,7 @@
 //   newTagName: null, // name of new tag to be created
 //   newTagId: null,
 //   newTagClass: null,
-//   innerHTMLText: "",
+//   innerHTMLText: "", //path to HTML file
 //   fileJS: "#", // javascript file to be injected
 //   JSParentTagName: "head", // tag name under which new HTML tag will be appended
 //   JSParentTagNameIndex: 0,
@@ -70,7 +70,7 @@ annolet.inject = {
     // newTagName: name of new child node to be created(optinal)(default: appends HTML to body)
     // newTagId: id of newTagName (optional)(default: NULL)
     // newTagClass: className of newTagName (optional)(default: NULL)
-    // innerHTMLText: html to be inserted into DOM. (required)
+    // innerHTMLText: path to html file to be inserted into DOM. (required)
     // if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass
 
         var parent = document.getElementsByTagName(service.HTMLParentTagName)[service.HTMLParentTagNameIndex]; // if newTagName is given, else append innerHTML to body.
@@ -82,12 +82,18 @@ annolet.inject = {
             if (service.newTagClass !== null) {
                 tagName.className += service.newTagClass;
             }
-            tagName.innerHTML = service.innerHTMLText;
-            parent.appendChild(tagName);
-            console.log("injectingHTML");
+            $j.ajax({ url: 'service.innerHTMLText', success: function(data) { 
+             tagName.innerHTML = data;
+             parent.appendChild(tagName);
+             console.log("injectingHTML");} 
+            });
+            
         } else {
-            parent.innerHTML += "\n" + service.innerHTMLText;
+                     $j.ajax({ url: 'service.innerHTMLText', success: function(data) { 
+            parent.innerHTML += "\n" + data;
             console.log("injectingHTML");
+                     } 
+            });
         }
     },
     injectJS: function(service) {
