@@ -89,7 +89,7 @@ annolet.inject = {
             });
             
         } else {
-                     $j.ajax({ url: service.innerHTMLText, success: function(data) { 
+            $j.ajax({ url: service.innerHTMLText, success: function(data) { 
             parent.innerHTML += "\n" + data;
             console.log("injectingHTML");
                      } 
