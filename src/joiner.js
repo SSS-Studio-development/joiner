@@ -140,13 +140,14 @@ annolet.createUI = function(){
 
 /* this function waits until JSON is completely loaded to avoid error */
 annolet.inject.joiner = function(){
+	var state = 0;
 	if(window.annolet.metafile){
 		  annolet.connectWebservices();
 		  annolet.createUI();
-		  break;
+		  state=1;
 	}
 	else{
-		setTimeout(annolet.inject.joiner(),225);
+	if(state == 0) setTimeout(annolet.inject.joiner(),225);
 		}
 }
 	
