@@ -139,7 +139,7 @@ annolet.createUI = function(){
 };
 
 /* this function waits until JSON is completely loaded to avoid error */
-var annolet.run = function(){
+annolet.run = function(){
 	annolet.getJSON();
 	$j(window.annolet.metafile).load(function(){
 		      annolet.connectWebservices();
