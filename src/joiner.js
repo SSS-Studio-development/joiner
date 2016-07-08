@@ -143,9 +143,10 @@ annolet.inject.joiner = function(){
 	if(window.annolet.metafile){
 		  annolet.connectWebservices();
 		  annolet.createUI();
+		  break;
 	}
 	else{
-		setTimeout(annolet.inject.joiner(),125);
+		setTimeout(annolet.inject.joiner(),225);
 		}
 }
 	
