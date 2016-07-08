@@ -146,4 +146,4 @@ var annolet.run = function(){
 		      annolet.createUI();});
 }
 
-annolet.run()
+annolet.run();
