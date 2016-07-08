@@ -138,8 +138,16 @@ annolet.createUI = function(){
   console.log("ui created");
 };
 
+/* this function waits until JSON is completely loaded to avoid error */
+annolet.inject.joiner = function(){
+	if(window.annolet.metafile){
+		  annolet.connectWebservices();
+		  annolet.createUI();
+	}
+	else{
+		setTimeout(annolet.inject.joiner(),125);
+		}
+}
+	
 annolet.getJSON();
-window.annolet.metafile.onload(function(){
-  annolet.connectWebservices();
-  annolet.createUI();
-});
+annolet.inject.joiner()
