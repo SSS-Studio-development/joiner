@@ -10,7 +10,8 @@
 //   newTagName: null, // name of new tag to be created
 //   newTagId: null,
 //   newTagClass: null,
-//   innerHTMLText: "", //path to HTML file
+//	 innerHTMLFile: null, // path to HTML file
+//   innerHTMLText: "", // if path not available. (deapriciated)
 //   fileJS: "#", // javascript file to be injected
 //   JSParentTagName: "head", // tag name under which new HTML tag will be appended
 //   JSParentTagNameIndex: 0,
@@ -41,7 +42,7 @@ annolet.connectWebservices = function() {
             annolet.inject.injectCSS(services[i]);
             console.log("injectedCSS");
         }
-        if (services[i].innerHTMLText !== null) {
+        if (services[i].innerHTMLText !== null || services[i].innerHTMLFile !== null) {
             annolet.inject.injectHTML(services[i]);
             console.log("injectedHTML");
         }
@@ -70,7 +71,7 @@ annolet.inject = {
     // newTagName: name of new child node to be created(optinal)(default: appends HTML to body)
     // newTagId: id of newTagName (optional)(default: NULL)
     // newTagClass: className of newTagName (optional)(default: NULL)
-    // innerHTMLText: path to html file to be inserted into DOM. (required)
+    // innerHTMLFile: path to html file to be inserted into DOM. (required)
     // if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass
 
         var parent = document.getElementsByTagName(service.HTMLParentTagName)[service.HTMLParentTagNameIndex]; // if newTagName is given, else append innerHTML to body.
@@ -82,18 +83,33 @@ annolet.inject = {
             if (service.newTagClass !== null) {
                 tagName.className += service.newTagClass;
             }
-            $j.ajax({ url: service.innerHTMLText, success: function(data) { 
-             tagName.innerHTML = data;
-             parent.appendChild(tagName);
-             console.log("injectingHTML");} 
-            });
+            if(service.innerHTMLFile !== null && service.innerHTMLText === null ){
+		        $j.ajax({ url: service.innerHTMLFile, success: function(data) { 
+				    tagName.innerHTML = data;
+				    parent.appendChild(tagName);
+				    console.log("injectingHTML");
+		        	} 
+		        Z});
+            }
+            else if(service.innerHTMLFile === null && service.innerHTMLText !== null){
+		    	 tagName.innerHTML = service.innerHTMLText;
+			     parent.appendChild(tagName);
+			     console.log("injectingHTML");
+            }
             
-        } else {
-            $j.ajax({ url: service.innerHTMLText, success: function(data) { 
-            parent.innerHTML += "\n" + data;
-            console.log("injectingHTML");
-                     } 
-            });
+        } 
+        else {
+        	if(service.innerHTMLFile !== null && service.innerHTMLText === null ){
+		        $j.ajax({ url: service.innerHTMLFile, success: function(data) { 
+				    parent.innerHTML += "\n" + data;
+				    console.log("injectingHTML");
+				    } 
+		        });
+            }
+            else if(service.innerHTMLFile === null && service.innerHTMLText !== null){
+				parent.innerHTML += "\n" + service.innerHTMLText;
+			    console.log("injectingHTML");
+            }
         }
     },
     injectJS: function(service) {
@@ -115,6 +131,7 @@ annolet.createButtons = function(service) {
 };
 annolet.createUI = function(){
   var menuUI = annolet.metafile.initial[0];
+  menuUI.innerHTMLText = "<ul id='annolet' class=annolet-tools-menu><span id='annolet' style='border-radius:10px; color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span id='annolet' style='color:grey;'>|</span>"+ annolet.buttonHTML +"<li id='annolet' class=annolet-tools-menu-item id=annolet-exit-btn >exit</li></ul>";
   annolet.inject.injectCSS(menuUI);
   annolet.inject.injectHTML(menuUI);
   annolet.inject.injectJS(menuUI);
