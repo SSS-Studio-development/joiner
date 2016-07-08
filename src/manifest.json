@@ -58,20 +58,6 @@
 		"menuButtonName": "Text2Speech",
 		"eventOnClick": "listenOnSelection()"
 	}, {
-		"fileCSS": "//rawgit.com/raghavmittal101/webservices/webDraw/drawMenu.css",
-		"HTMLParentTagName": "body",
-		"HTMLParentTagNameIndex": 0,
-		"newTagName": null,
-		"newTagId": null,
-		"newTagClass": null,
-		"innerHTMLText":null,
-		"innerHTMLFile": "//rawgit.com/raghavmittal101/webservices/webDraw/drawMenu.html",
-		"fileJS": "//rawgit.com/raghavmittal101/webservices/webDraw/drawApp.js",
-		"JSParentTagName": "head",
-		"JSParentTagNameIndex": 0,
-		"menuButtonName": "Draw",
-		"eventOnClick": "injectAndCall()"
-	}, {
 		"fileCSS": null,
 		"HTMLParentTagName": null,
 		"HTMLParentTagNameIndex": null,
