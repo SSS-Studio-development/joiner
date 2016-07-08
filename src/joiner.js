@@ -89,7 +89,7 @@ annolet.inject = {
 				    parent.appendChild(tagName);
 				    console.log("injectingHTML");
 		        	} 
-		        Z});
+		        });
             }
             else if(service.innerHTMLFile === null && service.innerHTMLText !== null){
 		    	 tagName.innerHTML = service.innerHTMLText;
@@ -142,4 +142,4 @@ annolet.getJSON();
 window.annolet.metafile.onload(function(){
   annolet.connectWebservices();
   annolet.createUI();
-})
+});
