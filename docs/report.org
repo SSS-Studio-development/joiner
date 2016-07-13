@@ -6,44 +6,52 @@
 We were working on development of AnnoletJS to demonstrate different features like rennaration, tagging, highlighting but the model we followed needed annolet code to be modified whenever a new feature was introduced. This was not scalable and was not the best way. We decided to separate webservices and annolet. Now our project is divided into two components - Joiner, Webservices.
 
 * Requirements
+  + It must act as a breadboard on which independent webservices can be plugged in, which will add them to frontend.
   + User must be able to use different webservices to annotate the document.
-  + Provide persistance for all the webservices.
+  + It should provide persistance for all the webservices.
 
 ** Use Cases
-    + User can play with document using webservices.
-    + User can save the present state of document.
-    + Webservice developer could add service to joiner.
+    + Access different independent webservices easily from one menu.
+    + Save annotations done on DOM.
+    + Reload older annotations on the page.
 
 
 * Specs
-The joiner has following components
-+ JSON Manifest file
-+ JoinerJS
++ The joiner has following components
+  - JSON Manifest file
+  - JoinerJS
 
 + Manifest file will be provide information about web services. It is a JSON file which contains information about
-  - name of menu option to be created and name of function to be called to run webservice.
-  - HTML and CSS files needed for UI
-  - JS files needed for functionality and interaction with server
+   - name of menu option to be created and name of function to be called to run webservice.
+   - HTML and CSS files needed for UI
+   - JS files needed for functionality and interaction with server
++ Joiner JS program will use manifest file to locate and load the webservices by injecting JS and HTML/CSS given in manifest into DOM. Hence exposing user directly to webservices.
 + For User Interface, webservice called Annolet will be loaded first. It will provide user interface for Menu which will contain options for all other webservices.
-+ Joiner JS programme will use manifest file to locate and load the webservices by injecting JS and HTML/CSS given in manifest into DOM. Hence exposing user directly to webservices.
++ For backend, I will use IBM Cloudant DbaaS. It is CouchDB NoSQL database, which can be operated using REST API. Details will be discussed later when I will add persistence.
 
 * Design
-+ format of metadata file
- + may contain much more options, not decided yet.
- + for now it looks like this
+** Manifest file
++ format of manifest file
 #+begin_src js
 {
-  fileCSS: null,  // location of CSS file to be injected into DOM
-  HTMLParentTagName: "body",  // tag name under which new HTML tag will be appended
-  HTMLParentTagNameIndex: 0, // index of the parent tag if there are multiple tags of same name
-  newTagName: null, // name of new tag to be created
-  newTagId: null, // ID of new tag
-  newTagClass: null, //Class of new tag
-  innerHTMLText: "", //HTML which will be wrapped inside body of new tag.
-  fileJS: "#", // location of javascript file which will be injected into DOM.
-  JSParentTagName: "head", // tag name under which new <script> tag will be appended.
-  JSParentTagNameIndex: 0, // index of the parent tag if there are multiple tags of same name
-  menuButtonName: null, // name of button which will be created in annolet interface
-  eventOnClick: null, // function to be called when user clicks dom element.
+	"fileCSS": null, // location of CSS file to be injected into DOM
+	"HTMLParentTagName": null, // tag name under which new HTML tag will be appended
+	"HTMLParentTagNameIndex": null, // index of the parent tag if there are multiple tags of same name
+	"newTagName": null, // name of new tag to be created
+	"newTagId": null, // ID of new tag
+	"newTagClass": null, //Class of new ta
+	"innerHTMLText":null, //HTML which will be wrapped inside body of new tag.
+	"innerHTMLFile": null, 
+	"fileJS": "", // location of javascript file which will be injected into DOM.
+	"JSParentTagName": "head", // tag name under which new <script> tag will be appended.
+	"JSParentTagNameIndex": 0, // index of the parent tag if there are multiple tags of same name
+	"menuButtonName": "", // name of button which will be created in annolet interface
+	"eventOnClick": "" // function to be called when user clicks dom element.
 }
+#+end_src
+
+** JavaScript
+*** Namespace
+#+begin_src js :tangle joiner.js
+var annolet = {}; //namespace declaration
 #+end_src
