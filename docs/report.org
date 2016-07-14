@@ -224,7 +224,7 @@ annolet.createUI = function(){
 #+END_SRC
 **** Function run()
 This is the main function which is called first called. It is responsible for running all other functions in correct sequence.
-#+function_run
+#+NAME: function_run
 #+BEGIN_SRC js :tangle joiner.js
 annolet.run = function(){
 	annolet.getJSON();
