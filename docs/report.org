@@ -2,8 +2,9 @@
 #+EMAIL: raghav.mittal@st.niituniversity.in
 #+TITLE: SSS Studio Joiner
 
-* Background
+* Background and motivation
 We were working on development of AnnoletJS to demonstrate different features like rennaration, tagging, highlighting but the model we followed needed annolet code to be modified whenever a new feature was introduced. This was not scalable and was not the best way. We decided to separate webservices and annolet. Now our project is divided into two components - Joiner, Webservices.
+This will increase scalability because now webservices are independent from annolet. Anyone can create webservices without knowledge of annolet code.
 
 * Requirements
   + It must act as a breadboard on which independent webservices can be plugged in, which will add them to frontend.
@@ -27,11 +28,11 @@ We were working on development of AnnoletJS to demonstrate different features li
    - JS files needed for functionality and interaction with server
 + Joiner JS program will use manifest file to locate and load the webservices by injecting JS and HTML/CSS given in manifest into DOM. Hence exposing user directly to webservices.
 + For User Interface, webservice called Annolet will be loaded. It will provide user interface for Menu which will contain options for all other webservices.
-+ For backend, I will use IBM Cloudant DbaaS. It is CouchDB NoSQL database, which can be operated using REST API. Details will be discussed later when I will add persistence.
++ For persistence, we will use IBM Cloudant DbaaS. It is CouchDB NoSQL database, which can be operated using REST API. Details will be discussed later.
   
 * Implementation
 ** Manifest file
-+ Manifest file is a file which provides a way to webservices developer to interect with Joiner and reach to the user. Below is the format of manifest JSON file.
++ It is JSON file which provides a way to webservice developer to integrate service with Joiner, so that user can use it. Below is the format of manifest JSON file. Developer will specify different values here. Different functions which will be discussed later will use this file to integrate webservices into joiner and create annolet UI.
 #+NAME: manifest_example
 #+begin_src js
 {
@@ -52,6 +53,12 @@ We were working on development of AnnoletJS to demonstrate different features li
 #+end_src
 
 ** JavaScript
+**** Using jQuery noConflict
+To make the program more robust and avoid clash between variables with that of running website, jQuery noConflict() is used and normal ‘$’ selector is changed with ‘$j’.
+#+NAME: jquery_noConflict
+#+BEGIN_SRC js :tangle joiner.js
+var $j = jQuery.noConflict();
+#+END_SRC
 **** Declaring namespace
 Declaring a namespace will prevent conflicts between the variables declared in joiner code and those already present in browser by separating all the functions and variables declared in joiner code from those already present. This is done because joiner is a bookmarklet and can be loaded into any website, so there are more chances of conflicts.
 #+NAME: namespace
@@ -106,6 +113,9 @@ annolet.connectWebservices = function() {
 #+END_SRC
 **** class inject
 It contains all the functions which are required to inject CSS/HTML/JS into the DOM. These functions are very main component of this script. They are responsible for exposing webservices to user.
+#+BEGIN_SRC js :tangle joiner.js
+annolet.inject = {};
+#+END_SRC
 ***** function injectCSS(service)
       This function will inject CSS file into header of DOM as specified in service by webservice developer.
 #+NAME: function_injectCSS
