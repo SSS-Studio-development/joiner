@@ -1,6 +1,6 @@
 #+AUTHOR: RAGHAV MITTAL
 #+EMAIL: raghav.mittal@st.niituniversity.in
-#+TITLE: SSS Studio Joiner
+#+TITLE: Joiner
 
 * Background and Motivation
 We were working on development of AnnoletJS to demonstrate different features like rennaration, tagging, highlighting but the model we followed needed annolet code to be modified whenever a new feature was introduced. This was not scalable and was not the best way. We decided to separate webservices and annolet. Now our project is divided into two components - Joiner, Webservices.
