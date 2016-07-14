@@ -242,4 +242,4 @@ annolet.run();
 + Successfully tested on Android platform in browser - Chrome.
 + To be tested on Windows and Mac OS.
 * Remaining Work
-+ Addition of Persistence is still under discussion.
++ Adding persistence is under progress.
