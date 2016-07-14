@@ -29,7 +29,7 @@ This will increase scalability because now webservices are independent from anno
 + Joiner JS program will use manifest file to locate and load the webservices by injecting JS and HTML/CSS given in manifest into DOM. Hence exposing user directly to webservices.
 + For User Interface, webservice called Annolet will be loaded. It will provide user interface for Menu which will contain options for all other webservices.
 + For persistence, we will use IBM Cloudant DbaaS. It is CouchDB NoSQL database, which can be operated using REST API. Details will be discussed later.
-+ The code is written in JavaScript and jQuery 1.7 is used in it.  
++ The code is written in JavaScript and jQuery 1.7 is used.  
 * Implementation
 ** Manifest file
 + It is JSON file which provides a way to webservice developer to integrate service with Joiner, so that user can use it. Below is the format of manifest JSON file. Developer will specify different values here. Different functions which will be discussed later will use this file to integrate webservices into joiner and create annolet UI.
