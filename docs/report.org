@@ -11,10 +11,10 @@ We were working on development of AnnoletJS to demonstrate different features li
   + It should provide persistance for all the webservices.
 
 * Use Cases
-    + Access different independent webservices easily from one menu.
-    + Save annotations done on DOM.
-    + Reload older annotations on the page.
-
+    + User can access different independent webservices easily from one menu.
+    + User can save annotations done on DOM.
+    + User can reload older annotations on the page.
+    + Webservice developer can quickly integrate webservices into annolet menu.
 
 * Specs
 + The joiner has following components
@@ -78,6 +78,28 @@ When manifest file will be fetched by =getJSON= function, it will be copied into
 ***** connectWebservices()
 This functions will go through each object in manifest file. Lets call each object a service. So it will check specification of the service and the service will be passed through injection functions if required.
 #+BEGIN_SRC js :tangle joiner.js
+annolet.connectWebservices = function() {
+    var services = annolet.metafile.services;
+    for(var i = 0; i < services.length; i++) {
+        services[i].id = i + 1; // reserving 0 for exit.
+        if (services[i].fileCSS !== null) {
+            annolet.inject.injectCSS(services[i]);
+            console.log("injectedCSS");
+        }
+        if (services[i].innerHTMLText !== null || services[i].innerHTMLFile !== null) {
+            annolet.inject.injectHTML(services[i]);
+            console.log("injectedHTML");
+        }
+        if (services[i].fileJS !== null) {
+            annolet.inject.injectJS(services[i]);
+            console.log("injectedJS");
+        }
+        if (services[i].menuButtonName !== null) {
+            annolet.createButtons(services[i]);
+            console.log("buttons done");
+        }
+    }
+};
 #+END_SRC
 ***** inject
 It contains all the functions which are required to inject CSS/HTML/JS into the DOM. These functions are very main component of this script. They are responsible for exposing webservices to user.
@@ -191,3 +213,9 @@ running the whole program by calling =run()= function
 #+BEGIN_SRC js :tangle joiner.js
 annolet.run();
 #+END_SRC
+* Testing
++ Successfully tested on Linux platform in browsers - Firefox, Chrome, Opera.
++ Successfully tested on Android platform in browser - Chrome.
++ To be tested on Windows and Mac OS.
+* Remaining Work
++ Addition of Persistance is still under discussion.
