@@ -72,5 +72,20 @@
 		"menuButtonName": "Tagger",
 		"eventOnClick": "do_tagging()"
 
+	}, {
+		"fileCSS": "//rawgit.com/raghavmittal101/tagging/master/css/style.css",
+		"HTMLParentTagName": "body",
+		"HTMLParentTagNameIndex": 0,
+		"newTagName": null,
+		"newTagId": null,
+		"newTagClass": null,
+		"innerHTMLText":null,
+		"innerHTMLFile": "//rawgit.com/raghavmittal101/tagging/master/index.html",
+		"fileJS": "//rawgit.com/raghavmittal101/tagging/master/js/tagging.js",
+		"JSParentTagName": "head",
+		"JSParentTagNameIndex": 0,
+		"menuButtonName": "rtag",
+		"eventOnClick": "toggle_tagging()"
+
 	}]
 }
