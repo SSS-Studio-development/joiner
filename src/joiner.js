@@ -21,7 +21,7 @@
 
 var $j = jQuery.noConflict();
 
-var annolet={}; //namespace
+var annolet = {}; //namespace
 
 annolet.getJSON = function(){
       /*
@@ -34,6 +34,7 @@ annolet.getJSON = function(){
           annolet.metafile = json;
       });
   };
+
 annolet.connectWebservices = function() {
     var services = annolet.metafile.services;
     for(var i = 0; i < services.length; i++) {
@@ -56,74 +57,78 @@ annolet.connectWebservices = function() {
         }
     }
 };
-annolet.inject = {
-    injectCSS: function(service) {
-      var link = document.createElement('link');
-      // using rawgit.com MaxCDN.. files directly linked to git repo 'annoletjs/master'
-      link.href = service.fileCSS; //random version number removed bcoz some browser take it as text file and not as CSS.
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      document.getElementsByTagName('head')[0].appendChild(link);
-    },
-    injectHTML: function(service) {
-    // HTMLParentTagName: name of parent node (optional)(default: body)
-    // index: index of parent node under which new element will be created(optional)(default: 0)
-    // newTagName: name of new child node to be created(optinal)(default: appends HTML to body)
-    // newTagId: id of newTagName (optional)(default: NULL)
-    // newTagClass: className of newTagName (optional)(default: NULL)
-    // innerHTMLFile: path to html file to be inserted into DOM. (required)
-    // if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass
 
-        var parent = document.getElementsByTagName(service.HTMLParentTagName)[service.HTMLParentTagNameIndex]; // if newTagName is given, else append innerHTML to body.
-        if (service.newTagName !== null) {
-            var tagName = document.createElement(service.newTagName);
-            if (service.newTagId !== null) {
-                tagName.id += " " + service.newTagId;
-            }
-            if (service.newTagClass !== null) {
-                tagName.className += service.newTagClass;
-            }
-            if(service.innerHTMLFile !== null && service.innerHTMLText === null ){
-		        $j.ajax({ url: service.innerHTMLFile, success: function(data) { 
-				    tagName.innerHTML = data;
-				    parent.appendChild(tagName);
-				    console.log("injectingHTML");
-		        	} 
-		        });
-            }
-            else if(service.innerHTMLFile === null && service.innerHTMLText !== null){
-		    	 tagName.innerHTML = service.innerHTMLText;
-			     parent.appendChild(tagName);
-			     console.log("injectingHTML");
-            }
-            
-        } 
-        else {
-        	if(service.innerHTMLFile !== null && service.innerHTMLText === null ){
-		        $j.ajax({ url: service.innerHTMLFile, success: function(data) { 
-				    parent.innerHTML += "\n" + data;
-				    console.log("injectingHTML");
-				    } 
-		        });
-            }
-            else if(service.innerHTMLFile === null && service.innerHTMLText !== null){
-				parent.innerHTML += "\n" + service.innerHTMLText;
-			    console.log("injectingHTML");
-            }
-        }
-    },
-    injectJS: function(service) {
-      // JSParentTagName(optional)(defaut: 'head')- usually JS is injected into '<head>' but if you want to
-      // inject under someother node then specify.
-      // jsLocation(required)(default: '#') - location of js file which is to be injected
+annolet.inject = {};
 
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = service.fileJS;
-        document.getElementsByTagName(service.JSParentTagName)[service.JSParentTagNameIndex].appendChild(script);
-        console.log("injectingJS");
-    },
+annolet.inject.injectCSS = function(service) {
+  var link = document.createElement('link');
+  // using rawgit.com MaxCDN.. files directly linked to git repo 'annoletjs/master'
+  link.href = service.fileCSS; //random version number removed bcoz some browser take it as text file and not as CSS.
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  document.getElementsByTagName('head')[0].appendChild(link);
 };
+
+annolet.inject.injectHTML = function(service) {
+// HTMLParentTagName: name of parent node (optional)(default: body)
+// index: index of parent node under which new element will be created(optional)(default: 0)
+// newTagName: name of new child node to be created(optinal)(default: appends HTML to body)
+// newTagId: id of newTagName (optional)(default: NULL)
+// newTagClass: className of newTagName (optional)(default: NULL)
+// innerHTMLFile: path to html file to be inserted into DOM. (required)
+// if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass
+
+    var parent = document.getElementsByTagName(service.HTMLParentTagName)[service.HTMLParentTagNameIndex]; // if newTagName is given, else append innerHTML to body.
+    if (service.newTagName !== null) {
+        var tagName = document.createElement(service.newTagName);
+        if (service.newTagId !== null) {
+            tagName.id += " " + service.newTagId;
+        }
+        if (service.newTagClass !== null) {
+            tagName.className += service.newTagClass;
+        }
+        if(service.innerHTMLFile !== null && service.innerHTMLText === null ){
+            $j.ajax({ url: service.innerHTMLFile, success: function(data) { 
+                tagName.innerHTML = data;
+                parent.appendChild(tagName);
+                console.log("injectingHTML");
+                } 
+            });
+        }
+        else if(service.innerHTMLFile === null && service.innerHTMLText !== null){
+             tagName.innerHTML = service.innerHTMLText;
+             parent.appendChild(tagName);
+             console.log("injectingHTML");
+        }
+
+    } 
+    else {
+        if(service.innerHTMLFile !== null && service.innerHTMLText === null ){
+            $j.ajax({ url: service.innerHTMLFile, success: function(data) { 
+                parent.innerHTML += "\n" + data;
+                console.log("injectingHTML");
+                } 
+            });
+        }
+        else if(service.innerHTMLFile === null && service.innerHTMLText !== null){
+            parent.innerHTML += "\n" + service.innerHTMLText;
+            console.log("injectingHTML");
+        }
+    }
+};
+
+annolet.inject.injectJS = function(service) {
+  // JSParentTagName(optional)(defaut: 'head')- usually JS is injected into '<head>' but if you want to
+  // inject under someother node then specify.
+  // jsLocation(required)(default: '#') - location of js file which is to be injected
+
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = service.fileJS;
+    document.getElementsByTagName(service.JSParentTagName)[service.JSParentTagNameIndex].appendChild(script);
+    console.log("injectingJS");
+};
+
 annolet.buttonHTML = "";
 annolet.createButtons = function(service) {
     annolet.buttonHTML += "<li id='annolet' class=annolet-tools-menu-item onclick=" + service.eventOnClick + ">" + service.menuButtonName + "</li>";

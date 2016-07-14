@@ -10,7 +10,7 @@ We were working on development of AnnoletJS to demonstrate different features li
   + User must be able to use different webservices to annotate the document.
   + It should provide persistance for all the webservices.
 
-** Use Cases
+* Use Cases
     + Access different independent webservices easily from one menu.
     + Save annotations done on DOM.
     + Reload older annotations on the page.
@@ -26,12 +26,12 @@ We were working on development of AnnoletJS to demonstrate different features li
    - HTML and CSS files needed for UI
    - JS files needed for functionality and interaction with server
 + Joiner JS program will use manifest file to locate and load the webservices by injecting JS and HTML/CSS given in manifest into DOM. Hence exposing user directly to webservices.
-+ For User Interface, webservice called Annolet will be loaded first. It will provide user interface for Menu which will contain options for all other webservices.
++ For User Interface, webservice called Annolet will be loaded. It will provide user interface for Menu which will contain options for all other webservices.
 + For backend, I will use IBM Cloudant DbaaS. It is CouchDB NoSQL database, which can be operated using REST API. Details will be discussed later when I will add persistence.
 
-* Design
+* Implementation
 ** Manifest file
-+ format of manifest file
++ Manifest file is a file which provides a way to webservices developer to interect with Joiner and reach to the user. Below is the format of manifest JSON file.
 #+begin_src js
 {
 	"fileCSS": null, // location of CSS file to be injected into DOM
@@ -41,7 +41,7 @@ We were working on development of AnnoletJS to demonstrate different features li
 	"newTagId": null, // ID of new tag
 	"newTagClass": null, //Class of new ta
 	"innerHTMLText":null, //HTML which will be wrapped inside body of new tag.
-	"innerHTMLFile": null, 
+	"innerHTMLFile": null, //HTML file location from which HTML will be injected same as innerHTMLText.
 	"fileJS": "", // location of javascript file which will be injected into DOM.
 	"JSParentTagName": "head", // tag name under which new <script> tag will be appended.
 	"JSParentTagNameIndex": 0, // index of the parent tag if there are multiple tags of same name
@@ -55,3 +55,139 @@ We were working on development of AnnoletJS to demonstrate different features li
 #+begin_src js :tangle joiner.js
 var annolet = {}; //namespace declaration
 #+end_src
+
+*** Object Oriented Structure
+**** objects under namespace =annolet=
+***** getJSON()
+This function will fetch the JSON manifest file and load it into DOM.
+#+BEGIN_SRC js :tangle joiner.js
+annolet.getJSON = function(){
+      /*
+        This function is for getting json from server and loading it to
+        frontend. it will help in calling webservices using
+        manifest JSON file.
+      */
+      var pathJSON = "//rawgit.com/SSS-Studio-development/joiner/master/src/manifest.json"+ "?v=" + parseInt(Math.random() * 999);
+      $j.getJSON(pathJSON, function(json) {
+          annolet.metafile = json;
+      });
+  };
+#+END_SRC
+***** metafile
+When manifest file will be fetched by =getJSON= function, it will be copied into this variable.
+***** connectWebservices()
+This functions will go through each object in manifest file. Lets call each object a service. So it will check specification of the service and the service will be passed through injection functions if required.
+#+BEGIN_SRC js :tangle joiner.js
+#+END_SRC
+***** inject
+It contains all the functions which are required to inject CSS/HTML/JS into the DOM. These functions are very main component of this script. They are responsible for exposing webservices to user.
+****** injectCSS(service)
+This function will inject CSS file into header of DOM as specified in service by webservice developer.
+#+begin_src js :tangle joiner.js
+annolet.inject.injectCSS = function(service) {
+  var link = document.createElement('link');
+  // using rawgit.com MaxCDN.. files directly linked to git repo 'annoletjs/master'
+  link.href = service.fileCSS; //random version number removed bcoz some browser take it as text file and not as CSS.
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  document.getElementsByTagName('head')[0].appendChild(link);
+};
+#+END_SRC
+****** injectHTML(service)
+This function will inject HTML into the DOM of webpage.
+#+BEGIN_SRC js :tangle joiner.js
+annolet.inject.injectHTML = function(service) {
+// HTMLParentTagName: name of parent node (required, when you want to add HTML else leave this null)
+// HTMLParentTagNameIndex: index of parent node under which new element will be created(required, when you want to add HTML else leave this null)(default: null)
+// newTagName: name of new child node to be created(required, when you want to add HTML else leave this null)(default: null)
+// newTagId: id of newTagName (optional)(default: NULL)
+// newTagClass: className of newTagName (optional)(default: NULL)
+// innerHTMLFile: path to html file to be inserted into DOM. (required if innerHTMLText is not provided, when you want to add HTML else leave this null)
+//innerHTMLText: If you dont have saparate file for HTML, directly add HTML here in single string form, without spaces. (deapriciated)(its better to provide HTML Text inside your JS file)
+// if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass
+
+    var parent = document.getElementsByTagName(service.HTMLParentTagName)[service.HTMLParentTagNameIndex]; // if newTagName is given, else append innerHTML to body.
+    if (service.newTagName !== null) {
+        var tagName = document.createElement(service.newTagName);
+        if (service.newTagId !== null) {
+            tagName.id += " " + service.newTagId;
+        }
+        if (service.newTagClass !== null) {
+            tagName.className += service.newTagClass;
+        }
+        if(service.innerHTMLFile !== null && service.innerHTMLText === null ){
+            $j.ajax({ url: service.innerHTMLFile, success: function(data) { 
+                tagName.innerHTML = data;
+                parent.appendChild(tagName);
+                console.log("injectingHTML");
+                } 
+            });
+        }
+        else if(service.innerHTMLFile === null && service.innerHTMLText !== null){
+             tagName.innerHTML = service.innerHTMLText;
+             parent.appendChild(tagName);
+             console.log("injectingHTML");
+        }
+
+    } 
+    else {
+        if(service.innerHTMLFile !== null && service.innerHTMLText === null ){
+            $j.ajax({ url: service.innerHTMLFile, success: function(data) { 
+                parent.innerHTML += "\n" + data;
+                console.log("injectingHTML");
+                } 
+            });
+        }
+        else if(service.innerHTMLFile === null && service.innerHTMLText !== null){
+            parent.innerHTML += "\n" + service.innerHTMLText;
+            console.log("injectingHTML");
+        }
+    }
+};
+#+END_SRC
+****** injectJS(service)
+#+BEGIN_SRC js :tangle joiner.js
+annolet.inject.injectJS = function(service) {
+  // JSParentTagName(required, if you want to add JS to DOM else leave empty)(defaut: null)
+  // JsParentTagNameIndex(required, if you want to add JS to DOM else leave empty)(default: null)
+  // jsLocation(required, if you want to add JS to DOM else leave empty)(default: null)
+
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = service.fileJS;
+    document.getElementsByTagName(service.JSParentTagName)[service.JSParentTagNameIndex].appendChild(script);
+    console.log("injectingJS");
+};
+#+END_SRC
+***** buttonHTML
+***** createButtons(service)
+#+BEGIN_SRC js :tangle joiner.js
+annolet.createButtons = function(service) {
+    annolet.buttonHTML += "<li id='annolet' class=annolet-tools-menu-item onclick=" + service.eventOnClick + ">" + service.menuButtonName + "</li>";
+    console.log("butons created");
+};
+#+END_SRC
+***** createUI(service)
+#+BEGIN_SRC js :tangle joiner.js
+annolet.createUI = function(){
+  var menuUI = annolet.metafile.initial[0];
+  menuUI.innerHTMLText = "<ul id='annolet' class=annolet-tools-menu><span id='annolet' style='border-radius:10px; color:orange;font-weight:bold;font-family:monospace; font-size:1.3em'>AnnoLet!</span><span id='annolet' style='color:grey;'>|</span>"+ annolet.buttonHTML +"<li id='annolet' class=annolet-tools-menu-item id=annolet-exit-btn >exit</li></ul>";
+  annolet.inject.injectCSS(menuUI);
+  annolet.inject.injectHTML(menuUI);
+  annolet.inject.injectJS(menuUI);
+  console.log("ui created");
+};
+#+END_SRC
+***** run()
+#+BEGIN_SRC js :tangle joiner.js
+annolet.run = function(){
+	annolet.getJSON();
+	$j(window.annolet.metafile).load(function(){
+		      annolet.connectWebservices();
+		      annolet.createUI();});
+};
+#+END_SRC
+running the whole program by calling =run()= function
+#+BEGIN_SRC js :tangle joiner.js
+annolet.run();
+#+END_SRC
