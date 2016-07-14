@@ -2,7 +2,7 @@
 #+EMAIL: raghav.mittal@st.niituniversity.in
 #+TITLE: SSS Studio Joiner
 
-* Background and motivation
+* Background and Motivation
 We were working on development of AnnoletJS to demonstrate different features like rennaration, tagging, highlighting but the model we followed needed annolet code to be modified whenever a new feature was introduced. This was not scalable and was not the best way. We decided to separate webservices and annolet. Now our project is divided into two components - Joiner, Webservices.
 This will increase scalability because now webservices are independent from annolet. Anyone can create webservices without knowledge of annolet code.
 
@@ -29,7 +29,7 @@ This will increase scalability because now webservices are independent from anno
 + Joiner JS program will use manifest file to locate and load the webservices by injecting JS and HTML/CSS given in manifest into DOM. Hence exposing user directly to webservices.
 + For User Interface, webservice called Annolet will be loaded. It will provide user interface for Menu which will contain options for all other webservices.
 + For persistence, we will use IBM Cloudant DbaaS. It is CouchDB NoSQL database, which can be operated using REST API. Details will be discussed later.
-  
++ The code is written in JavaScript and jQuery 1.7 is used in it.  
 * Implementation
 ** Manifest file
 + It is JSON file which provides a way to webservice developer to integrate service with Joiner, so that user can use it. Below is the format of manifest JSON file. Developer will specify different values here. Different functions which will be discussed later will use this file to integrate webservices into joiner and create annolet UI.
@@ -67,7 +67,7 @@ var annolet = {}; //namespace declaration
 #+end_src
 
 Functions and objects under namespace =annolet=
-**** function getJSON()
+**** Function getJSON()
 This function will fetch the JSON manifest file and load it into DOM.
 #+BEGIN_SRC js :tangle joiner.js
 annolet.getJSON = function(){
@@ -82,9 +82,9 @@ annolet.getJSON = function(){
       });
   };
 #+END_SRC
-**** var metafile
+**** Variable metafile
 When manifest file will be fetched by =getJSON= function, it will be copied into this variable.
-**** function connectWebservices()
+**** Function connectWebservices()
 This functions will go through each object in manifest file. Lets call each object a service. So it will check specification of the service and the service will be passed through injection functions if required.
 #+NAME: function_connectWebServices
 #+BEGIN_SRC js :tangle joiner.js
@@ -111,12 +111,12 @@ annolet.connectWebservices = function() {
     }
 };
 #+END_SRC
-**** class inject
+**** Object inject
 It contains all the functions which are required to inject CSS/HTML/JS into the DOM. These functions are very main component of this script. They are responsible for exposing webservices to user.
 #+BEGIN_SRC js :tangle joiner.js
 annolet.inject = {};
 #+END_SRC
-***** function injectCSS(service)
+***** Function injectCSS(service)
       This function will inject CSS file into header of DOM as specified in service by webservice developer.
 #+NAME: function_injectCSS
 #+begin_src js :tangle joiner.js
@@ -129,7 +129,7 @@ annolet.inject.injectCSS = function(service) {
   document.getElementsByTagName('head')[0].appendChild(link);
 };
 #+END_SRC
-***** function injectHTML(service)
+***** Function injectHTML(service)
 This function will inject HTML into the DOM of webpage.
 #+NAME: function_injectHTML
 #+BEGIN_SRC js :tangle joiner.js
@@ -198,17 +198,18 @@ annolet.inject.injectJS = function(service) {
     console.log("injectingJS");
 };
 #+END_SRC
-**** function createButtons(service)
+**** Function createButtons(service)
 #+NAME: function_createButtons
 #+BEGIN_SRC js :tangle joiner.js
+annolet.buttonHTML = ""; //defining variable
 annolet.createButtons = function(service) {
     annolet.buttonHTML += "<li id='annolet' class=annolet-tools-menu-item onclick=" + service.eventOnClick + ">" + service.menuButtonName + "</li>";
     console.log("butons created");
 };
 #+END_SRC
-**** var buttonHTML
+**** Variable buttonHTML
 This variable will store HTML created by =createButtons()= function. This HTML will be responsible for creating buttons in Annolet UI.
-**** function createUI(service)
+**** Function createUI(service)
 In manifest file first JSON object is called "initial" which contains information about UI of annolet or annolet webservice. =createUI= function adds =innerHTML= to that object and then pass it to inject functions.
 #+NAME: function_createUI
 #+BEGIN_SRC js :tangle joiner.js
@@ -221,7 +222,7 @@ annolet.createUI = function(){
   console.log("ui created");
 };
 #+END_SRC
-**** function run()
+**** Function run()
 This is the main function which is called first called. It is responsible for running all other functions in correct sequence.
 #+function_run
 #+BEGIN_SRC js :tangle joiner.js

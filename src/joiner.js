@@ -70,12 +70,13 @@ annolet.inject.injectCSS = function(service) {
 };
 
 annolet.inject.injectHTML = function(service) {
-// HTMLParentTagName: name of parent node (optional)(default: body)
-// index: index of parent node under which new element will be created(optional)(default: 0)
-// newTagName: name of new child node to be created(optinal)(default: appends HTML to body)
+// HTMLParentTagName: name of parent node (required, when you want to add HTML else leave this null)
+// HTMLParentTagNameIndex: index of parent node under which new element will be created(required, when you want to add HTML else leave this null)(default: null)
+// newTagName: name of new child node to be created(required, when you want to add HTML else leave this null)(default: null)
 // newTagId: id of newTagName (optional)(default: NULL)
 // newTagClass: className of newTagName (optional)(default: NULL)
-// innerHTMLFile: path to html file to be inserted into DOM. (required)
+// innerHTMLFile: path to html file to be inserted into DOM. (required if innerHTMLText is not provided, when you want to add HTML else leave this null)
+//innerHTMLText: If you dont have saparate file for HTML, directly add HTML here in single string form, without spaces. (deapriciated)(its better to provide HTML Text inside your JS file)
 // if you dont want to add new child, then dont provide newTagId, newTagName, newTagClass
 
     var parent = document.getElementsByTagName(service.HTMLParentTagName)[service.HTMLParentTagNameIndex]; // if newTagName is given, else append innerHTML to body.
@@ -118,9 +119,9 @@ annolet.inject.injectHTML = function(service) {
 };
 
 annolet.inject.injectJS = function(service) {
-  // JSParentTagName(optional)(defaut: 'head')- usually JS is injected into '<head>' but if you want to
-  // inject under someother node then specify.
-  // jsLocation(required)(default: '#') - location of js file which is to be injected
+  // JSParentTagName(required, if you want to add JS to DOM else leave empty)(defaut: null)
+  // JsParentTagNameIndex(required, if you want to add JS to DOM else leave empty)(default: null)
+  // jsLocation(required, if you want to add JS to DOM else leave empty)(default: null)
 
     var script = document.createElement("script");
     script.type = "text/javascript";
